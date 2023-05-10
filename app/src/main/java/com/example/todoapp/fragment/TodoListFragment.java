@@ -42,6 +42,12 @@ public class TodoListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         recyclerView.setAdapter(todoListAdapter);
 
+        // Set up the click listener for each item
+//        todoListAdapter.setOnItemClickListener((position) -> {
+//            Todo todo = todos.get(position);
+//            showTodoDetailPage(todo);
+//        });
+
         todoViewModel.getAllTodos().observe(getViewLifecycleOwner(), new Observer<List<Todo>>() {
             @Override
             public void onChanged(List<Todo> todos) {
@@ -51,4 +57,15 @@ public class TodoListFragment extends Fragment {
 
         return view;
     }
+
+//    private void showTodoDetailPage(Todo todo) {
+//        // Create a new instance of the todo detail fragment and pass the todo data
+//        TodoDetailFragment todoDetailFragment = TodoDetailFragment.newInstance(todo);
+//
+//        // Navigate to the todo detail fragment using a FragmentTransaction
+//        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+//        transaction.replace(R.id.container, todoDetailFragment);
+//        transaction.addToBackStack(null);
+//        transaction.commit();
+//    }
 }
