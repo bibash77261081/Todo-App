@@ -23,9 +23,15 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.TodoVi
         todos = new ArrayList<>();
     }
 
+    public TodoListAdapter() {
+        this.todos = new ArrayList<>();
+    }
+
     public void setTodos(List<Todo> todos) {
-        this.todos = todos;
-        notifyDataSetChanged();
+        if (todos != null) {
+            this.todos = todos;
+            notifyDataSetChanged();
+        }
     }
 
     @NonNull

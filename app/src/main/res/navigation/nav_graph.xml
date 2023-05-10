@@ -5,7 +5,7 @@
 
     <fragment
         android:id="@+id/todoListFragment"
-        android:name="com.example.todoapp.TodoListFragment"
+        android:name="com.example.todoapp.fragment.TodoDetailFragment"
         android:label="Todo List Fragment">
 
         <action
@@ -16,7 +16,7 @@
 
     <fragment
         android:id="@+id/todoDetailFragment"
-        android:name="com.example.todoapp.TodoDetailFragment"
+        android:name="com.example.todoapp.fragment.TodoDetailFragment"
         android:label="Todo Detail Fragment">
 
         <!-- Other fragment attributes and destinations -->
