@@ -49,15 +49,21 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.TodoVi
 
     class TodoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView txtTitle;
+        private TextView txtDetail;
+        private TextView txtDate;
 
         TodoViewHolder(@NonNull View itemView) {
             super(itemView);
             txtTitle = itemView.findViewById(R.id.txtTitle);
+            txtDetail = itemView.findViewById(R.id.txtDetail);
+            txtDate = itemView.findViewById(R.id.txtDate);
             itemView.setOnClickListener(this);
         }
 
         void bind(Todo todo) {
             txtTitle.setText(todo.getTitle());
+            txtDetail.setText(todo.getDetail());
+            txtDate.setText((CharSequence) todo.getDate());
         }
 
         @Override

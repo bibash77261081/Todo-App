@@ -35,5 +35,9 @@ public class TodoRepository {
     public void delete(Todo todo) {
         AppDatabase.databaseWriteExecutor.execute(() -> todoDao.delete(todo));
     }
+
+    public void deleteAll() {
+        AppDatabase.databaseWriteExecutor.execute(() -> todoDao.deleteAll());
+    }
 }
 
