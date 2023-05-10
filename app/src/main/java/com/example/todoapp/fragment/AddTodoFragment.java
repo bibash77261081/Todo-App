@@ -7,18 +7,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
+import com.example.todoapp.MainActivity;
 import com.example.todoapp.R;
 import com.example.todoapp.database.Todo;
 import com.example.todoapp.viewmodel.TodoViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class AddTodoFragment extends Fragment {
@@ -32,7 +37,7 @@ public class AddTodoFragment extends Fragment {
 
     private Calendar calendar;
     private SimpleDateFormat dateFormat;
-
+    NavController navController;
     public AddTodoFragment() {
         // Required empty public constructor
     }
@@ -43,6 +48,7 @@ public class AddTodoFragment extends Fragment {
         todoViewModel = new ViewModelProvider(requireActivity()).get(TodoViewModel.class);
         calendar = Calendar.getInstance();
         dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
     }
 
     @Override
@@ -61,9 +67,27 @@ public class AddTodoFragment extends Fragment {
         buttonAdd.setOnClickListener(v -> {
             String title = editTextTitle.getText().toString().trim();
             String detail = editTextDetail.getText().toString().trim();
-            String date = dateFormat.format(calendar.getTime());
+            Date date = calendar.getTime();
 
-            if (!title.isEmpty()) {
+            // Validate input
+            if (title.isEmpty()) {
+                editTextTitle.setError("Title is required");
+                editTextTitle.requestFocus();
+                return;
+            }
+
+            else if (detail.isEmpty()) {
+                editTextDetail.setError("Detail is required");
+                editTextDetail.requestFocus();
+                return;
+            }
+
+            else if (date == null) {
+                Toast.makeText(requireContext(), "Please select a date", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            else {
                 Todo todo = new Todo();
                 todo.setTitle(title);
                 todo.setDetail(detail);
@@ -72,7 +96,16 @@ public class AddTodoFragment extends Fragment {
 
                 todoViewModel.insert();
 
-                Navigation.findNavController(v).navigateUp();
+                Toast.makeText(getActivity(), "Todo added successfully", Toast.LENGTH_SHORT).show();
+
+                int currentDestinationId = navController.getCurrentDestination().getId();
+                //navController.navigate(R.id.addTodoFragment);
+                if(currentDestinationId == R.id.addTodoFragment){
+                    navController.navigate(R.id.action_addTodoFragment_to_todoListFragment);
+                }
+//                else {
+//                    navController.navigate(R.id.action_todoListFragment_to_todoDetailFragment);
+//                }
             }
         });
 

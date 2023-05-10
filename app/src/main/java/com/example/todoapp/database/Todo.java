@@ -14,13 +14,13 @@ public class Todo {
     private int id;
     private String title;
     private String detail;
-    private String date;
+    private Date date;
     @ColumnInfo(name = "is_complete")
     private boolean isComplete;
 
 
     @Ignore
-    public Todo(int id, String title, String detail, String date, boolean isComplete) {
+    public Todo(int id, String title, String detail, Date date, boolean isComplete) {
         this.id = id;
         this.title = title;
         this.detail = detail;
@@ -28,7 +28,7 @@ public class Todo {
         this.isComplete = isComplete;
     }
 
-    public Todo(String title, String detail, String date, boolean isComplete) {
+    public Todo(String title, String detail, Date date, boolean isComplete) {
         this.title = title;
         this.detail = detail;
         this.date = date;
@@ -64,11 +64,11 @@ public class Todo {
         this.detail = detail;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

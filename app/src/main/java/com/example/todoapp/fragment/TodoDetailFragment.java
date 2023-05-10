@@ -14,8 +14,6 @@ import androidx.navigation.Navigation;
 import com.example.todoapp.R;
 import com.example.todoapp.viewmodel.TodoViewModel;
 
-import java.util.Date;
-
 public class TodoDetailFragment extends Fragment {
     private TodoViewModel todoViewModel;
     private EditText editTitle;
@@ -50,7 +48,7 @@ public class TodoDetailFragment extends Fragment {
             public void onClick(View v) {
                 String title = editTitle.getText().toString().trim();
                 String detail = editDetail.getText().toString().trim();
-//                Date date = editDate.getText().toString().trim();
+                String date = editDate.getText().toString().trim();
                 todoViewModel.updateTodoTitleAndDetail(title, detail);
                 Navigation.findNavController(v).navigateUp();
             }

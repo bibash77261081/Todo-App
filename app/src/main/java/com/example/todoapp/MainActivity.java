@@ -1,42 +1,55 @@
 package com.example.todoapp;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
-import com.example.todoapp.adapter.TodoListAdapter;
-import com.example.todoapp.database.Todo;
+import com.example.todoapp.fragment.AddTodoFragment;
+import com.example.todoapp.fragment.TodoListFragment;
 import com.example.todoapp.viewmodel.TodoViewModel;
-
-import java.util.List;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
-    private TodoListAdapter todoListAdapter;
-    private TodoViewModel todoViewModel;
+    private FloatingActionButton fabAddTodo;
+    private NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        navController = navHostFragment.getNavController();
 
-        todoListAdapter = new TodoListAdapter();
-        recyclerView.setAdapter(todoListAdapter);
-
-        todoViewModel = new ViewModelProvider(this).get(TodoViewModel.class);
-        todoViewModel.getAllTodos().observe(this, new Observer<List<Todo>>() {
-            @Override
-            public void onChanged(List<Todo> todos) {
-                todoListAdapter.setTodos(todos);
-            }
+        fabAddTodo = findViewById(R.id.fabAddTodo);
+        fabAddTodo.setOnClickListener(v -> {
+            // Navigate to AddTodoFragment
+            navigateToAddTodoFragment();
         });
+
+        // Display the TodoListFragment initially
+        displayTodoListFragment();
+    }
+
+    private void displayTodoListFragment() {
+        TodoListFragment todoListFragment = new TodoListFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentContainer, todoListFragment)
+                .commit();
+    }
+
+    private void navigateToAddTodoFragment() {
+        AddTodoFragment addTodoFragment = new AddTodoFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentContainer, addTodoFragment)
+                .addToBackStack(null)
+                .commit();
     }
 }
+
