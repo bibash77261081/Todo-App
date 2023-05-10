@@ -9,7 +9,7 @@ import androidx.room.TypeConverters;
 
 import java.util.concurrent.Executor;
 
-@TypeConverters(DateTypeConverter.class)
+//@TypeConverters(DateTypeConverter.class)
 @Database(entities = {Todo.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
     public static Executor databaseWriteExecutor;
