@@ -19,6 +19,13 @@
         android:layout_marginTop="16dp"
         android:hint="Detail" />
 
+    <CheckBox
+        android:id="@+id/checkboxCompleted"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Completed" />
+
     <Button
         android:id="@+id/btnSelectDate"
         android:layout_width="match_parent"

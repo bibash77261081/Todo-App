@@ -32,4 +32,7 @@ public interface TodoDao {
 
     @Query("DELETE FROM todos WHERE is_complete = 1")
     void deleteCompleted();
+
+    @Query("DELETE FROM todos where id = :id")
+    void deleteById(int id);
 }
