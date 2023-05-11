@@ -51,8 +51,6 @@ public class AddTodoFragment extends Fragment {
         todoViewModel = new ViewModelProvider(requireActivity()).get(TodoViewModel.class);
         calendar = Calendar.getInstance();
         dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        activity = (MainActivity) requireActivity();
-//        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
     }
 
     @Override

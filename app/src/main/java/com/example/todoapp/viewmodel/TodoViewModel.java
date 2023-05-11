@@ -28,8 +28,8 @@ public class TodoViewModel extends AndroidViewModel {
         return allTodos;
     }
 
-    public void getTodoById(int todoId) {
-        todoRepository.getTodoById(todoId);
+    public LiveData<Todo> getTodoById(int todoId) {
+        return todoRepository.getTodoById(todoId);
     }
 
     public void insert(Todo todo) {
@@ -40,16 +40,7 @@ public class TodoViewModel extends AndroidViewModel {
         todoRepository.update(todo);
     }
 
-    public void updateTodoTitleAndDetail(String title, String detail) {
-        Todo todo = new Todo();
-        todo.setTitle(title);
-        todo.setDetail(detail);
-//        todo.setDate(date);
-        todoRepository.update(todo);
-    }
-
-    public void delete() {
-        Todo todo = new Todo();
+    public void delete(Todo todo) {
         todoRepository.delete(todo);
     }
 
@@ -59,6 +50,10 @@ public class TodoViewModel extends AndroidViewModel {
 
     public void deleteCompleted(){
         todoRepository.deleteCompleted();
+    }
+
+    public void deleteById(int todoId){
+        todoRepository.deleteById(todoId);
     }
 }
 

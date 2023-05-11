@@ -72,7 +72,7 @@ public class TodoListFragment extends Fragment implements TodoListAdapter.OnTodo
 
     @Override
     public void onTodoItemClick(Todo todo) {
-        ((MainActivity)getActivity()).navigateToTodoDetail();
+        ((MainActivity)getActivity()).navigateToTodoDetail(todo.getId());
     }
 
     @Override
