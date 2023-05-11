@@ -28,12 +28,15 @@ public class TodoViewModel extends AndroidViewModel {
         return allTodos;
     }
 
+    public void getTodoById(int todoId) {
+        todoRepository.getTodoById(todoId);
+    }
+
     public void insert(Todo todo) {
         todoRepository.insert(todo);
     }
 
-    public void update() {
-        Todo todo = new Todo();
+    public void update(Todo todo) {
         todoRepository.update(todo);
     }
 

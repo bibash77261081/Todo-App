@@ -30,6 +30,9 @@ public class TodoRepository {
         return allTodos;
     }
 
+    public void getTodoById(int todoId) {
+        executor.execute(() -> todoDao.getTodoById(todoId));
+    }
     public void insert(Todo todo) {
         executor.execute(() -> todoDao.insert(todo));
     }

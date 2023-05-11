@@ -19,18 +19,20 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.todoapp.MainActivity;
 import com.example.todoapp.R;
 import com.example.todoapp.adapter.TodoListAdapter;
 import com.example.todoapp.database.Todo;
 import com.example.todoapp.viewmodel.TodoViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
 public class TodoListFragment extends Fragment implements TodoListAdapter.OnTodoItemClickListener {
     private TodoViewModel todoViewModel;
     private RecyclerView recyclerView;
+    private FloatingActionButton fabAddTodo;
     private TodoListAdapter todoListAdapter;
-    private boolean isMenuInflated = false;
 
     public TodoListFragment() {
         // Required empty public constructor
@@ -51,6 +53,9 @@ public class TodoListFragment extends Fragment implements TodoListAdapter.OnTodo
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         todoListAdapter = new TodoListAdapter(this);
         recyclerView.setAdapter(todoListAdapter);
+
+        fabAddTodo = view.findViewById(R.id.fabAddTodo);
+
         return view;
     }
 
@@ -60,6 +65,9 @@ public class TodoListFragment extends Fragment implements TodoListAdapter.OnTodo
         todoViewModel.getAllTodos().observe(getViewLifecycleOwner(), todos -> {
             todoListAdapter.setTodos(todos);
         });
+
+        fabAddTodo.setOnClickListener(v -> ((MainActivity) requireActivity()).navigateToAddTodo());
+
     }
 
     @Override
@@ -72,10 +80,7 @@ public class TodoListFragment extends Fragment implements TodoListAdapter.OnTodo
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        if (!isMenuInflated) {
-            inflater.inflate(R.menu.todo_list_menu, menu);
-            isMenuInflated = true;
-        }
+        inflater.inflate(R.menu.todo_list_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);;
     }
 
@@ -89,7 +94,6 @@ public class TodoListFragment extends Fragment implements TodoListAdapter.OnTodo
                 builder.setPositiveButton("Delete", (dialog, which) -> todoViewModel.deleteAll());
                 builder.setNegativeButton("Cancel", null);
                 builder.show();
-
                 return true;
 
             case R.id.menu_delete_completed:
@@ -98,7 +102,6 @@ public class TodoListFragment extends Fragment implements TodoListAdapter.OnTodo
                 builder.setPositiveButton("Delete", (dialog, which) -> todoViewModel.deleteCompleted());
                 builder.setNegativeButton("Cancel", null);
                 builder.show();
-
                 return true;
 
             default:

@@ -9,18 +9,30 @@
         android:id="@+id/txtTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="Title"
+        android:textStyle="bold"
         android:textAppearance="?android:textAppearanceLarge" />
 
     <TextView
         android:id="@+id/txtDetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="Detail"
         android:textAppearance="?android:textAppearanceMedium" />
 
     <TextView
         android:id="@+id/txtDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="Date"
+        android:textAppearance="?android:textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/txtStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Status"
+        android:textColor="@color/design_default_color_secondary"
         android:textAppearance="?android:textAppearanceMedium" />
 
 </LinearLayout>

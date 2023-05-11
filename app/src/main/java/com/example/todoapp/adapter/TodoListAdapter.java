@@ -69,18 +69,27 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.TodoVi
         private TextView txtTitle;
         private TextView txtDetail;
         private TextView txtDate;
+        private TextView txtStatus;
 
         TodoViewHolder(@NonNull View itemView) {
             super(itemView);
             txtTitle = itemView.findViewById(R.id.txtTitle);
             txtDetail = itemView.findViewById(R.id.txtDetail);
             txtDate = itemView.findViewById(R.id.txtDate);
+            txtStatus = itemView.findViewById(R.id.txtStatus);
             itemView.setOnClickListener(this);
         }
 
         void bind(Todo todo) {
             txtTitle.setText(todo.getTitle());
             txtDetail.setText(todo.getDetail());
+
+            if (todo.isComplete() == true){
+                txtStatus.setText("Completed");
+            }
+            else {
+                txtStatus.setText("Incomplete");
+            }
 
             Date date = todo.getDate();
             if (date != null) {

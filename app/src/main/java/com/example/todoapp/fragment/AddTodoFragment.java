@@ -102,7 +102,7 @@ public class AddTodoFragment extends Fragment {
 
                 Toast.makeText(getActivity(), "Todo added successfully", Toast.LENGTH_SHORT).show();
 
-                activity.displayTodoListFragment();
+                ((MainActivity)requireActivity()).navigateToTodoList();
             }
         });
 
@@ -140,8 +140,7 @@ public class AddTodoFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.menu_back:
-//                NavHostFragment.findNavController(this).navigateUp();
-                activity.displayTodoListFragment();
+                requireActivity().onBackPressed();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

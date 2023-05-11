@@ -6,58 +6,69 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.todoapp.fragment.AddTodoFragment;
+import com.example.todoapp.fragment.TodoDetailFragment;
 import com.example.todoapp.fragment.TodoListFragment;
 import com.example.todoapp.viewmodel.TodoViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
 
-    private FloatingActionButton fabAddTodo;
-    NavHostFragment navHostFragment;
-    FragmentManager childFragmentManager;
+    private static final String TAG_TODO_LIST = "todo_list";
+    private static final String TAG_TODO_DETAIL = "todo_detail";
+    private static final String TAG_TODO_ADD = "todo_add";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-//        childFragmentManager = navHostFragment.getChildFragmentManager();
-//        Fragment desiredFragment = new TodoListFragment();
-//        childFragmentManager.beginTransaction()
-//                .replace(R.id.nav_host_fragment, desiredFragment)
-//                .setPrimaryNavigationFragment(desiredFragment)
-//                .commit();
-
-        fabAddTodo = findViewById(R.id.fabAddTodo);
-        fabAddTodo.setOnClickListener(v -> {
-            // Navigate to AddTodoFragment
-            navigateToAddTodoFragment();
-        });
-
-        // Display the TodoListFragment initially
-        displayTodoListFragment();
+        if (savedInstanceState == null) {
+            replaceFragment(new TodoListFragment(), TAG_TODO_LIST);
+        }
     }
 
-    public void displayTodoListFragment() {
-        TodoListFragment todoListFragment = new TodoListFragment();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragmentContainer, todoListFragment)
-                .commit();
-    }
+//    @Override
+//    public void onTodoItemClick(int todoId) {
+//        TodoDetailFragment todoDetailFragment = TodoDetailFragment.newInstance(todoId);
+//        replaceFragment(todoDetailFragment, TAG_TODO_DETAIL);
+//    }
 
-    private void navigateToAddTodoFragment() {
+    public void navigateToAddTodo() {
         AddTodoFragment addTodoFragment = new AddTodoFragment();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragmentContainer, addTodoFragment)
-                .addToBackStack(null)
-                .commit();
+        replaceFragment(addTodoFragment, TAG_TODO_ADD);
+    }
+
+    public void navigateToTodoList() {
+        TodoListFragment todoListFragment = new TodoListFragment();
+        replaceFragment(todoListFragment, TAG_TODO_LIST);
+    }
+
+    public void navigateToTodoDetail() {
+        TodoDetailFragment todoDetailFragment = new TodoDetailFragment();
+        replaceFragment(todoDetailFragment, TAG_TODO_DETAIL);
+    }
+
+    private void replaceFragment(Fragment fragment, String tag) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragmentContainer, fragment, tag);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
+        if (backStackEntryCount > 0) {
+            getSupportFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
+        }
     }
 }
 
