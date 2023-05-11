@@ -37,7 +37,6 @@ public class AddTodoFragment extends Fragment {
 
     private Calendar calendar;
     private SimpleDateFormat dateFormat;
-    NavController navController;
 
     MainActivity activity;
     public AddTodoFragment() {
