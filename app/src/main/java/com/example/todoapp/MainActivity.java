@@ -25,13 +25,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-        childFragmentManager = navHostFragment.getChildFragmentManager();
-        Fragment desiredFragment = new TodoListFragment();
-        childFragmentManager.beginTransaction()
-                .replace(R.id.nav_host_fragment, desiredFragment)
-                .setPrimaryNavigationFragment(desiredFragment)
-                .commit();
+//        navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+//        childFragmentManager = navHostFragment.getChildFragmentManager();
+//        Fragment desiredFragment = new TodoListFragment();
+//        childFragmentManager.beginTransaction()
+//                .replace(R.id.nav_host_fragment, desiredFragment)
+//                .setPrimaryNavigationFragment(desiredFragment)
+//                .commit();
 
         fabAddTodo = findViewById(R.id.fabAddTodo);
         fabAddTodo.setOnClickListener(v -> {
