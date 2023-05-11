@@ -5,12 +5,15 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.room.TypeConverters;
 
+import com.example.todoapp.database.DateTypeConverter;
 import com.example.todoapp.database.Todo;
 import com.example.todoapp.repository.TodoRepository;
 
 import java.util.List;
 
+@TypeConverters(DateTypeConverter.class)
 public class TodoViewModel extends AndroidViewModel {
     private TodoRepository todoRepository;
     private LiveData<List<Todo>> allTodos;
@@ -29,12 +32,26 @@ public class TodoViewModel extends AndroidViewModel {
         todoRepository.insert(todo);
     }
 
-    public void update(Todo todo) {
+    public void update() {
+        Todo todo = new Todo();
         todoRepository.update(todo);
     }
 
-    public void delete(Todo todo) {
+    public void updateTodoTitleAndDetail(String title, String detail) {
+        Todo todo = new Todo();
+        todo.setTitle(title);
+        todo.setDetail(detail);
+//        todo.setDate(date);
+        todoRepository.update(todo);
+    }
+
+    public void delete() {
+        Todo todo = new Todo();
         todoRepository.delete(todo);
+    }
+
+    public void deleteAll(){
+        todoRepository.deleteAll();
     }
 }
 

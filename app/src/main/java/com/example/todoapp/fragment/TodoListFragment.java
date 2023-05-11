@@ -5,9 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,8 +21,9 @@ import com.example.todoapp.viewmodel.TodoViewModel;
 
 import java.util.List;
 
-public class TodoListFragment extends Fragment {
+public class TodoListFragment extends Fragment implements TodoListAdapter.OnTodoItemClickListener {
     private TodoViewModel todoViewModel;
+    private RecyclerView recyclerView;
     private TodoListAdapter todoListAdapter;
 
     public TodoListFragment() {
@@ -29,43 +33,34 @@ public class TodoListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        todoViewModel = new ViewModelProvider(this).get(TodoViewModel.class);
-        todoListAdapter = new TodoListAdapter();
+        todoViewModel = new ViewModelProvider(requireActivity()).get(TodoViewModel.class);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_todo_list, container, false);
-
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        todoListAdapter = new TodoListAdapter(this);
         recyclerView.setAdapter(todoListAdapter);
-
-        // Set up the click listener for each item
-//        todoListAdapter.setOnItemClickListener((position) -> {
-//            Todo todo = todos.get(position);
-//            showTodoDetailPage(todo);
-//        });
-
-        todoViewModel.getAllTodos().observe(getViewLifecycleOwner(), new Observer<List<Todo>>() {
-            @Override
-            public void onChanged(List<Todo> todos) {
-                todoListAdapter.setTodos(todos);
-            }
-        });
-
         return view;
     }
 
-//    private void showTodoDetailPage(Todo todo) {
-//        // Create a new instance of the todo detail fragment and pass the todo data
-//        TodoDetailFragment todoDetailFragment = TodoDetailFragment.newInstance(todo);
-//
-//        // Navigate to the todo detail fragment using a FragmentTransaction
-//        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-//        transaction.replace(R.id.container, todoDetailFragment);
-//        transaction.addToBackStack(null);
-//        transaction.commit();
-//    }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        todoViewModel.getAllTodos().observe(getViewLifecycleOwner(), todos -> {
+            todoListAdapter.setTodos(todos);
+        });
+    }
+
+    @Override
+    public void onTodoItemClick(Todo todo) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("todoId", todo.getId());
+        Navigation.findNavController(requireView())
+                .navigate(R.id.action_todoListFragment_to_todoDetailFragment, bundle);
+    }
 }
+

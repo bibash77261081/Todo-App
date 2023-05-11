@@ -1,5 +1,11 @@
 <resources>
-    <string name="app_name">Todo App</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">TodoApp</string>
+    <string name="add_todo">Add Todo</string>
+    <string name="todo_detail">Todo Detail</string>
+    <string name="update_todo">Update Todo</string>
+    <string name="delete_todo">Delete Todo</string>
+    <string name="undo">Undo</string>
+    <string name="select_date">Select Date</string>
+    <string name="detail">Detail</string>
+    <string name="title">Title</string>
 </resources>

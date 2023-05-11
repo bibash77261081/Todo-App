@@ -26,4 +26,7 @@ public interface TodoDao {
 
     @Delete
     void delete(Todo todo);
+
+    @Query("DELETE FROM todos")
+    void deleteAll();
 }
