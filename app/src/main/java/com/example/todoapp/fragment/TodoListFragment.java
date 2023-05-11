@@ -64,10 +64,10 @@ public class TodoListFragment extends Fragment implements TodoListAdapter.OnTodo
 
     @Override
     public void onTodoItemClick(Todo todo) {
-//        Bundle bundle = new Bundle();
-//        bundle.putInt("todoId", todo.getId());
-//        Navigation.findNavController(requireView())
-//                .navigate(R.id.action_todoListFragment_to_todoDetailFragment, bundle);
+        Bundle bundle = new Bundle();
+        bundle.putInt("todoId", todo.getId());
+        Navigation.findNavController(requireView())
+                .navigate(R.id.action_todoListFragment_to_todoDetailFragment, bundle);
     }
 
     @Override
