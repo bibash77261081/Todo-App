@@ -45,6 +45,9 @@ public class TodoRepository {
     public void deleteAll() {
         executor.execute(() -> todoDao.deleteAll());
     }
+    public void deleteCompleted() {
+        executor.execute(() -> todoDao.deleteCompleted());
+    }
 }
 
 

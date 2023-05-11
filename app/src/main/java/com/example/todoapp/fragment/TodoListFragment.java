@@ -1,7 +1,12 @@
 package com.example.todoapp.fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -25,6 +30,7 @@ public class TodoListFragment extends Fragment implements TodoListAdapter.OnTodo
     private TodoViewModel todoViewModel;
     private RecyclerView recyclerView;
     private TodoListAdapter todoListAdapter;
+    private boolean isMenuInflated = false;
 
     public TodoListFragment() {
         // Required empty public constructor
@@ -33,6 +39,7 @@ public class TodoListFragment extends Fragment implements TodoListAdapter.OnTodo
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         todoViewModel = new ViewModelProvider(requireActivity()).get(TodoViewModel.class);
     }
 
@@ -57,10 +64,46 @@ public class TodoListFragment extends Fragment implements TodoListAdapter.OnTodo
 
     @Override
     public void onTodoItemClick(Todo todo) {
-        Bundle bundle = new Bundle();
-        bundle.putInt("todoId", todo.getId());
-        Navigation.findNavController(requireView())
-                .navigate(R.id.action_todoListFragment_to_todoDetailFragment, bundle);
+//        Bundle bundle = new Bundle();
+//        bundle.putInt("todoId", todo.getId());
+//        Navigation.findNavController(requireView())
+//                .navigate(R.id.action_todoListFragment_to_todoDetailFragment, bundle);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        if (!isMenuInflated) {
+            inflater.inflate(R.menu.todo_list_menu, menu);
+            isMenuInflated = true;
+        }
+        super.onCreateOptionsMenu(menu, inflater);;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        switch (item.getItemId()){
+            case R.id.menu_delete_all:
+                builder.setTitle("Delete All Todos");
+                builder.setMessage("Are you sure you want to delete all todos?");
+                builder.setPositiveButton("Delete", (dialog, which) -> todoViewModel.deleteAll());
+                builder.setNegativeButton("Cancel", null);
+                builder.show();
+
+                return true;
+
+            case R.id.menu_delete_completed:
+                builder.setTitle("Delete Completed Todos");
+                builder.setMessage("Are you sure you want to delete all completed todos?");
+                builder.setPositiveButton("Delete", (dialog, which) -> todoViewModel.deleteCompleted());
+                builder.setNegativeButton("Cancel", null);
+                builder.show();
+
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
 
