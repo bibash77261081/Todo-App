@@ -1,7 +1,6 @@
 package com.example.todoapp.viewmodel;
 
 import android.app.Application;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -12,7 +11,6 @@ import com.example.todoapp.database.DateTypeConverter;
 import com.example.todoapp.database.Todo;
 import com.example.todoapp.repository.TodoRepository;
 
-import java.util.Date;
 import java.util.List;
 
 @TypeConverters(DateTypeConverter.class)
@@ -30,8 +28,7 @@ public class TodoViewModel extends AndroidViewModel {
         return allTodos;
     }
 
-    public void insert() {
-        Todo todo = new Todo();
+    public void insert(Todo todo) {
         todoRepository.insert(todo);
     }
 

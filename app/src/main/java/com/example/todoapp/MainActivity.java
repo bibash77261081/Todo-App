@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -15,15 +17,21 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class MainActivity extends AppCompatActivity {
 
     private FloatingActionButton fabAddTodo;
-    private NavController navController;
+    NavHostFragment navHostFragment;
+    FragmentManager childFragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-        navController = navHostFragment.getNavController();
+        navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        childFragmentManager = navHostFragment.getChildFragmentManager();
+        Fragment desiredFragment = new TodoListFragment();
+        childFragmentManager.beginTransaction()
+                .replace(R.id.nav_host_fragment, desiredFragment)
+                .setPrimaryNavigationFragment(desiredFragment)
+                .commit();
 
         fabAddTodo = findViewById(R.id.fabAddTodo);
         fabAddTodo.setOnClickListener(v -> {
@@ -35,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         displayTodoListFragment();
     }
 
-    private void displayTodoListFragment() {
+    public void displayTodoListFragment() {
         TodoListFragment todoListFragment = new TodoListFragment();
         getSupportFragmentManager()
                 .beginTransaction()

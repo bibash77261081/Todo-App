@@ -50,20 +50,17 @@ public class TodoListFragment extends Fragment implements TodoListAdapter.OnTodo
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        todoViewModel.getAllTodos().observe(getViewLifecycleOwner(), new Observer<List<Todo>>() {
-            @Override
-            public void onChanged(List<Todo> todos) {
-                todoListAdapter.setTodos(todos);
-            }
+        todoViewModel.getAllTodos().observe(getViewLifecycleOwner(), todos -> {
+            todoListAdapter.setTodos(todos);
         });
     }
 
     @Override
     public void onTodoItemClick(Todo todo) {
-//        Bundle bundle = new Bundle();
-//        bundle.putInt("todoId", todo.getId());
-//        Navigation.findNavController(requireView())
-//                .navigate(R.id.action_todoListFragment_to_todoDetailFragment, bundle);
+        Bundle bundle = new Bundle();
+        bundle.putInt("todoId", todo.getId());
+        Navigation.findNavController(requireView())
+                .navigate(R.id.action_todoListFragment_to_todoDetailFragment, bundle);
     }
 }
 

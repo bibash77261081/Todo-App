@@ -11,16 +11,28 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.todoapp.R;
 import com.example.todoapp.database.Todo;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.TodoViewHolder> {
     private List<Todo> todos;
+    private SimpleDateFormat dateFormat;
+
     private OnTodoItemClickListener itemClickListener;
 
     public TodoListAdapter(OnTodoItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
         todos = new ArrayList<>();
+        dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+    }
+
+    public TodoListAdapter(List<Todo> todos) {
+        this.todos = todos;
+        dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
     }
 
     public TodoListAdapter() {
@@ -69,7 +81,23 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.TodoVi
         void bind(Todo todo) {
             txtTitle.setText(todo.getTitle());
             txtDetail.setText(todo.getDetail());
-            txtDate.setText((CharSequence) todo.getDate());
+
+            Date date = todo.getDate();
+            if (date != null) {
+                String formattedDate = dateFormat.format(date);
+                txtDate.setText(formattedDate);
+            } else {
+                // Get the current date
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH) + 1;  // January is represented as 0
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+                // Display the current date
+                String currentDate = day + "/" + month + "/" + year;
+                txtDate.setText(currentDate);
+            }
+
         }
 
         @Override

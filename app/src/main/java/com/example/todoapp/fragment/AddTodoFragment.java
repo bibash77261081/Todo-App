@@ -38,6 +38,8 @@ public class AddTodoFragment extends Fragment {
     private Calendar calendar;
     private SimpleDateFormat dateFormat;
     NavController navController;
+
+    MainActivity activity;
     public AddTodoFragment() {
         // Required empty public constructor
     }
@@ -48,7 +50,8 @@ public class AddTodoFragment extends Fragment {
         todoViewModel = new ViewModelProvider(requireActivity()).get(TodoViewModel.class);
         calendar = Calendar.getInstance();
         dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
+        activity = (MainActivity) requireActivity();
+//        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
     }
 
     @Override
@@ -94,18 +97,11 @@ public class AddTodoFragment extends Fragment {
                 todo.setDate(date);
                 todo.setComplete(false);
 
-                todoViewModel.insert();
+                todoViewModel.insert(todo);
 
                 Toast.makeText(getActivity(), "Todo added successfully", Toast.LENGTH_SHORT).show();
 
-                int currentDestinationId = navController.getCurrentDestination().getId();
-                //navController.navigate(R.id.addTodoFragment);
-                if(currentDestinationId == R.id.addTodoFragment){
-                    navController.navigate(R.id.action_addTodoFragment_to_todoListFragment);
-                }
-//                else {
-//                    navController.navigate(R.id.action_todoListFragment_to_todoDetailFragment);
-//                }
+                activity.displayTodoListFragment();
             }
         });
 
