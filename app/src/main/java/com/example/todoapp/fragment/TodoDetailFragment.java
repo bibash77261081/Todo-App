@@ -18,6 +18,7 @@ import com.example.todoapp.viewmodel.TodoViewModel;
 
 public class TodoDetailFragment extends Fragment {
     private TodoViewModel todoViewModel;
+    private int todoId;
     private EditText editTitle;
     private EditText editDetail;
     private Button btnSelectDate;
@@ -26,6 +27,14 @@ public class TodoDetailFragment extends Fragment {
 
     public TodoDetailFragment() {
         // Required empty public constructor
+    }
+
+    public static TodoDetailFragment newInstance(int todoId) {
+        TodoDetailFragment fragment = new TodoDetailFragment();
+        Bundle args = new Bundle();
+        args.putInt("todoId", todoId);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -63,5 +72,41 @@ public class TodoDetailFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        loadTodoDetails();
+    }
+
+    private void loadTodoDetails() {
+        if (todoId != -1) {
+            // Fetch the todo from the database
+            Todo todo = todoViewModel.getTodoById(todoId);
+            if (todo != null) {
+                editTitle.setText(todo.getTitle());
+                editDetail.setText(todo.getDetail());
+            }
+        }
+    }
+
+    private void updateTodo() {
+        String title = editTitle.getText().toString();
+        String detail = editDetail.getText().toString();
+
+        if (todoId != -1) {
+            Todo updatedTodo = new Todo(todoId, title, detail);
+            todoViewModel.updateTodo(updatedTodo);
+            Toast.makeText(requireContext(), "Todo updated", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void deleteTodo() {
+        if (todoId != -1) {
+            todoViewModel.deleteTodoById(todoId);
+            Toast.makeText(requireContext(), "Todo deleted", Toast.LENGTH_SHORT).show();
+            requireActivity().onBackPressed();
+        }
     }
 }
