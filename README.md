@@ -7,7 +7,7 @@ A todo app written in java using the fragments, Components, MVVM, persistance, m
 ### Application Icon  
 Application icon seen while installing or after installed
 
- ![add](gifs/TodoIcon.gif)
+ ![add](gifs/TodoIcon.png)
 
 ### Splash Screen 
 The Screen that the user sees while opening the app before the homescreen.
