@@ -65,5 +65,23 @@ public class MainActivity extends AppCompatActivity{
             super.onBackPressed();
         }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Get the currently displayed fragment
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+
+        // Update the app name based on the current fragment
+        if (currentFragment instanceof TodoListFragment) {
+            setTitle("Todo List");
+        } else if (currentFragment instanceof TodoDetailFragment) {
+            setTitle("Todo Detail");
+        } else if (currentFragment instanceof AddTodoFragment) {
+            setTitle("Add Todo");
+        }
+    }
+
 }
 

@@ -35,6 +35,7 @@
         android:layout_marginTop="16dp"
         android:drawableLeft="@android:drawable/ic_menu_my_calendar"
         android:drawablePadding="8dp"
+        android:textColor="@color/black"
         android:text="@string/select_date" />
 
     <LinearLayout
@@ -48,6 +49,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textColor="@color/black"
             android:text="Update" />
 
         <Button
@@ -56,6 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="50dp"
+            android:textColor="@color/black"
             android:text="Delete" />
 
     </LinearLayout>

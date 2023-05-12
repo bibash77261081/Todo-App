@@ -20,6 +20,8 @@ import java.util.Locale;
 
 public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.TodoViewHolder> {
     private List<Todo> todos;
+    private SimpleDateFormat inputDateFormat;
+
     private SimpleDateFormat dateFormat;
 
     private OnTodoItemClickListener itemClickListener;
@@ -27,12 +29,13 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.TodoVi
     public TodoListAdapter(OnTodoItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
         todos = new ArrayList<>();
-        dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        inputDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        dateFormat = new SimpleDateFormat("EE dd MMM yyyy", Locale.getDefault());
     }
 
     public TodoListAdapter(List<Todo> todos) {
         this.todos = todos;
-        dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        inputDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
     }
 
     public TodoListAdapter() {
@@ -68,14 +71,18 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.TodoVi
     class TodoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView txtTitle;
         private TextView txtDetail;
+        private TextView txtDay;
         private TextView txtDate;
+        private TextView txtMonth;
         private TextView txtStatus;
 
         TodoViewHolder(@NonNull View itemView) {
             super(itemView);
             txtTitle = itemView.findViewById(R.id.txtTitle);
             txtDetail = itemView.findViewById(R.id.txtDetail);
+            txtDay = itemView.findViewById(R.id.txtDay);
             txtDate = itemView.findViewById(R.id.txtDate);
+            txtMonth = itemView.findViewById(R.id.txtMonth);
             txtStatus = itemView.findViewById(R.id.txtStatus);
             itemView.setOnClickListener(this);
         }
@@ -84,27 +91,37 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.TodoVi
             txtTitle.setText(todo.getTitle());
             txtDetail.setText(todo.getDetail());
 
-            if (todo.isComplete() == true){
-                txtStatus.setText("Completed");
-            }
-            else {
-                txtStatus.setText("Incomplete");
-            }
+            txtStatus.setText(todo.isComplete() ? "COMPLETED" : "INCOMPLETE");
 
             Date date = todo.getDate();
             if (date != null) {
                 String formattedDate = dateFormat.format(date);
-                txtDate.setText(formattedDate);
-            } else {
-                // Get the current date
-                Calendar calendar = Calendar.getInstance();
-                int year = calendar.get(Calendar.YEAR);
-                int month = calendar.get(Calendar.MONTH) + 1;  // January is represented as 0
-                int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-                // Display the current date
-                String currentDate = day + "/" + month + "/" + year;
-                txtDate.setText(currentDate);
+                String[] item = formattedDate.split(" ");
+                String day = item[0];
+                String dd = item[1];
+                String month = item[2];
+
+                txtDay.setText(day);
+                txtDate.setText(dd);
+                txtMonth.setText(month);
+
+            } else {
+                // Get current date
+                Calendar currentCalendar = Calendar.getInstance();
+                Date currentDate = currentCalendar.getTime();
+
+                todo.setDate(currentDate);
+                String formattedDate = dateFormat.format(currentDate);
+
+                String[] item = formattedDate.split(" ");
+                String day = item[0];
+                String dd = item[1];
+                String month = item[2];
+
+                txtDay.setText(day);
+                txtDate.setText(dd);
+                txtMonth.setText(month);
             }
 
         }

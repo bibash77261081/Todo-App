@@ -105,5 +105,11 @@ public class TodoListFragment extends Fragment implements TodoListAdapter.OnTodo
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        requireActivity().setTitle("Todo List");
+    }
 }
 

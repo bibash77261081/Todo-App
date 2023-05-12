@@ -8,4 +8,6 @@
     <string name="select_date">Select Date</string>
     <string name="detail">Detail</string>
     <string name="title">Title</string>
+    <string name="todo_icon_description">Todo Icon</string>
+    <string name="tick_mark_description">Tick Mark</string>
 </resources>

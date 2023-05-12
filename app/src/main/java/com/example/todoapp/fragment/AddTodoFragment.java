@@ -84,11 +84,6 @@ public class AddTodoFragment extends Fragment {
                 return;
             }
 
-            else if (date == null) {
-                Toast.makeText(requireContext(), "Please select a date", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
             else {
                 Todo todo = new Todo();
                 todo.setTitle(title);
@@ -143,5 +138,11 @@ public class AddTodoFragment extends Fragment {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        requireActivity().setTitle("Add Todo");
     }
 }
