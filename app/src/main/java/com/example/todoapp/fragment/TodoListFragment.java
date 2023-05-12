@@ -117,6 +117,9 @@ public class TodoListFragment extends Fragment implements TodoListAdapter.OnTodo
                 builder.show();
                 return true;
 
+            case R.id.menu_about:
+                ((MainActivity)getActivity()).navigateToAbout();
+
             default:
                 return super.onOptionsItemSelected(item);
         }

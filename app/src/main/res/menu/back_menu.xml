@@ -6,5 +6,6 @@
         android:id="@+id/menu_back"
         android:title="Back"
         android:icon="@drawable/ic_back"
+        android:iconTint="@color/white"
         app:showAsAction="ifRoom|withText"/>
 </menu>
