@@ -20,6 +20,11 @@ public class Todo {
 
 
     @Ignore
+    public Todo(int id) {
+        this.id = id;
+    }
+
+    @Ignore
     public Todo(int id, String title, String detail, Date date, boolean isComplete) {
         this.id = id;
         this.title = title;

@@ -84,11 +84,6 @@ public class AddTodoFragment extends Fragment {
                 return;
             }
 
-            else if (date == null) {
-                Toast.makeText(requireContext(), "Please select a date", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
             else {
                 Todo todo = new Todo();
                 todo.setTitle(title);

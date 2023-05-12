@@ -44,6 +44,8 @@ public class TodoDetailFragment extends Fragment {
     private SimpleDateFormat dateFormat;
     private boolean status;
 
+    boolean isDateChanged = false;
+
     public TodoDetailFragment() {
         // Required empty public constructor
     }
@@ -108,8 +110,16 @@ public class TodoDetailFragment extends Fragment {
                         editDetail.setText(todo.getDetail());
                         checkboxCompleted.setChecked(todo.isComplete());
 
-                        String formattedDate = dateFormat.format(todo.getDate());
-                        btnSelectDate.setText(formattedDate);
+                        Date date = todo.getDate();
+                        if (date != null) {
+                            String formattedDate = dateFormat.format(date);
+                            btnSelectDate.setText(formattedDate);
+                        }
+                        else {
+                            date = calendar.getTime();
+                            String formattedDate = dateFormat.format(date);
+                            btnSelectDate.setText(formattedDate);
+                        }
                     }
                 }
             });
@@ -119,17 +129,20 @@ public class TodoDetailFragment extends Fragment {
     private void updateTodo() {
         String title = editTitle.getText().toString().trim();
         String detail = editDetail.getText().toString().trim();
-        Date date = calendar.getTime();
 
-        if (checkboxCompleted.isChecked()){
-            status = true;
-        }
-        else {
-            status = false;
-        }
+     Date date = calendar.getTime();
+
+    if (!isDateChanged) {
+        LiveData<Todo> todoLiveData = todoViewModel.getTodoById(todoId);
+        Todo todo = todoLiveData.getValue();
+        if(todo != null)
+            date = todo.getDate();
+        else
+            date = calendar.getTime();
+    }
 
         if (todoId != -1) {
-            Todo updatedTodo = new Todo(todoId, title, detail, date, status);
+            Todo updatedTodo = new Todo(todoId, title, detail, date, checkboxCompleted.isChecked());
             todoViewModel.update(updatedTodo);
             Toast.makeText(requireContext(), "Todo updated", Toast.LENGTH_SHORT).show();
             ((MainActivity)getActivity()).navigateToTodoList();
@@ -145,6 +158,8 @@ public class TodoDetailFragment extends Fragment {
     }
 
     private void showDatePickerDialog() {
+
+        isDateChanged = true;
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 requireContext(),
                 (view, year, month, dayOfMonth) -> {
