@@ -12,7 +12,7 @@ Application icon seen while installing or after installed
 ### Splash Screen 
 The Screen that the user sees while opening the app before the homescreen.
  
-![add](gifs/SplashScreen.gif)
+![add](gifs/SplashScreen.png)
 
 ### Navigation
 Can navigate back to the previous page.
