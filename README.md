@@ -76,7 +76,7 @@ These are the Non- functional requirements added on the Application to make it m
  
 - Splash Screen
 - Application Icon
-- Navigation Button
+- Navigation Menu Item
 - Delete All
 - Delete Completed
 - Search Todo
