@@ -54,6 +54,9 @@ public class TodoRepository {
     public void deleteById(int todoId) {
         executor.execute(() -> todoDao.deleteById(todoId));
     }
+
+    public LiveData<List<Todo>> searchTodos(String searchText) {
+        String searchQuery = "%" + searchText + "%";
+        return todoDao.searchTodos(searchQuery);
+    }
 }
-
-

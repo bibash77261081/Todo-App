@@ -55,5 +55,9 @@ public class TodoViewModel extends AndroidViewModel {
     public void deleteById(int todoId){
         todoRepository.deleteById(todoId);
     }
+
+    public LiveData<List<Todo>> searchTodos(String searchText) {
+        return todoRepository.searchTodos(searchText);
+    }
 }
 

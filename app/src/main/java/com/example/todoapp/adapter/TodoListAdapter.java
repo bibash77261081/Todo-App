@@ -21,25 +21,16 @@ import java.util.Locale;
 public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.TodoViewHolder> {
     private List<Todo> todos;
     private SimpleDateFormat inputDateFormat;
-
     private SimpleDateFormat dateFormat;
 
     private OnTodoItemClickListener itemClickListener;
+
 
     public TodoListAdapter(OnTodoItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
         todos = new ArrayList<>();
         inputDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         dateFormat = new SimpleDateFormat("EE dd MMM yyyy", Locale.getDefault());
-    }
-
-    public TodoListAdapter(List<Todo> todos) {
-        this.todos = todos;
-        inputDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-    }
-
-    public TodoListAdapter() {
-        this.todos = new ArrayList<>();
     }
 
     public void setTodos(List<Todo> todos) {
