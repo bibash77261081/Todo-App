@@ -30,7 +30,7 @@ Can add the todo by filling the required fields.
 ![add](gifs/TodoAdd.gif)
 
 ### Validation
-Fields can't be empty.
+Fields can't be empty. Date will be set to current date if left unselected.
 
 ![add](gifs/TodoAddValidate.gif)
 
