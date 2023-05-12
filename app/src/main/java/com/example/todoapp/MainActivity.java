@@ -11,6 +11,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.todoapp.adapter.TodoListAdapter;
+import com.example.todoapp.fragment.AboutFragment;
 import com.example.todoapp.fragment.AddTodoFragment;
 import com.example.todoapp.fragment.TodoDetailFragment;
 import com.example.todoapp.fragment.TodoListFragment;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity{
     private static final String TAG_TODO_LIST = "todo_list";
     private static final String TAG_TODO_DETAIL = "todo_detail";
     private static final String TAG_TODO_ADD = "todo_add";
+    private static final String TAG_ABOUT = "about";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,11 @@ public class MainActivity extends AppCompatActivity{
     public void navigateToTodoDetail(int todoId) {
         TodoDetailFragment todoDetailFragment = TodoDetailFragment.newInstance(todoId);
         replaceFragment(todoDetailFragment, TAG_TODO_DETAIL);
+    }
+
+    public void navigateToAbout() {
+        AboutFragment aboutFragment = new AboutFragment();
+        replaceFragment(aboutFragment, TAG_ABOUT);
     }
 
     private void replaceFragment(Fragment fragment, String tag) {

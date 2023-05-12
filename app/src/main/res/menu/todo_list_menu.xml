@@ -16,4 +16,8 @@
         android:id="@+id/menu_delete_completed"
         android:title="Delete Completed" />
 
+    <item
+        android:id="@+id/menu_about"
+        android:title="About" />
+
 </menu>
