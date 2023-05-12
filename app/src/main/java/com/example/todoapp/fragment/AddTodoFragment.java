@@ -144,4 +144,10 @@ public class AddTodoFragment extends Fragment {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        requireActivity().setTitle("Add Todo");
+    }
 }
