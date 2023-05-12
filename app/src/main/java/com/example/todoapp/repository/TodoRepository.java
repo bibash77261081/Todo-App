@@ -30,8 +30,8 @@ public class TodoRepository {
         return allTodos;
     }
 
-    public void getTodoById(int todoId) {
-        executor.execute(() -> todoDao.getTodoById(todoId));
+    public LiveData<Todo> getTodoById(int todoId) {
+        return todoDao.getTodoById(todoId);
     }
     public void insert(Todo todo) {
         executor.execute(() -> todoDao.insert(todo));
@@ -51,6 +51,12 @@ public class TodoRepository {
     public void deleteCompleted() {
         executor.execute(() -> todoDao.deleteCompleted());
     }
+    public void deleteById(int todoId) {
+        executor.execute(() -> todoDao.deleteById(todoId));
+    }
+
+    public LiveData<List<Todo>> searchTodos(String searchText) {
+        String searchQuery = "%" + searchText + "%";
+        return todoDao.searchTodos(searchQuery);
+    }
 }
-
-

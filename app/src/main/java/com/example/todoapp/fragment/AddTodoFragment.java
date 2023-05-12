@@ -51,8 +51,6 @@ public class AddTodoFragment extends Fragment {
         todoViewModel = new ViewModelProvider(requireActivity()).get(TodoViewModel.class);
         calendar = Calendar.getInstance();
         dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        activity = (MainActivity) requireActivity();
-//        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
     }
 
     @Override
@@ -83,11 +81,6 @@ public class AddTodoFragment extends Fragment {
             else if (detail.isEmpty()) {
                 editTextDetail.setError("Detail is required");
                 editTextDetail.requestFocus();
-                return;
-            }
-
-            else if (date == null) {
-                Toast.makeText(requireContext(), "Please select a date", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -145,5 +138,11 @@ public class AddTodoFragment extends Fragment {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        requireActivity().setTitle("Add Todo");
     }
 }

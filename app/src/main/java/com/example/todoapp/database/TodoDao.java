@@ -32,4 +32,10 @@ public interface TodoDao {
 
     @Query("DELETE FROM todos WHERE is_complete = 1")
     void deleteCompleted();
+
+    @Query("DELETE FROM todos where id = :id")
+    void deleteById(int id);
+
+    @Query("SELECT * FROM todos WHERE title LIKE :searchQuery OR detail LIKE :searchQuery")
+    LiveData<List<Todo>> searchTodos(String searchQuery);
 }

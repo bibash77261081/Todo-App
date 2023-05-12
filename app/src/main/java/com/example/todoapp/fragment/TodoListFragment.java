@@ -1,7 +1,6 @@
 package com.example.todoapp.fragment;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -9,13 +8,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import androidx.appcompat.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,6 +32,7 @@ public class TodoListFragment extends Fragment implements TodoListAdapter.OnTodo
     private RecyclerView recyclerView;
     private FloatingActionButton fabAddTodo;
     private TodoListAdapter todoListAdapter;
+    private SearchView searchView;
 
     public TodoListFragment() {
         // Required empty public constructor
@@ -72,15 +72,28 @@ public class TodoListFragment extends Fragment implements TodoListAdapter.OnTodo
 
     @Override
     public void onTodoItemClick(Todo todo) {
-        Bundle bundle = new Bundle();
-        bundle.putInt("todoId", todo.getId());
-        Navigation.findNavController(requireView())
-                .navigate(R.id.action_todoListFragment_to_todoDetailFragment, bundle);
+        ((MainActivity)getActivity()).navigateToTodoDetail(todo.getId());
     }
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.todo_list_menu, menu);
+        MenuItem searchItem = menu.findItem(R.id.menu_search);
+        searchView = (SearchView) searchItem.getActionView();
+        searchView.setQueryHint("Search Todo");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                searchTodos(newText);
+                return true;
+            }
+        });
+
         super.onCreateOptionsMenu(menu, inflater);;
     }
 
@@ -104,9 +117,27 @@ public class TodoListFragment extends Fragment implements TodoListAdapter.OnTodo
                 builder.show();
                 return true;
 
+            case R.id.menu_about:
+                ((MainActivity)getActivity()).navigateToAbout();
+
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void searchTodos(String searchText) {
+        todoViewModel.searchTodos("%" + searchText + "%").observe(getViewLifecycleOwner(), new Observer<List<Todo>>() {
+            @Override
+            public void onChanged(List<Todo> todos) {
+                todoListAdapter.setTodos(todos);
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        requireActivity().setTitle("Todo List");
     }
 }
 

@@ -8,4 +8,23 @@
     <string name="select_date">Select Date</string>
     <string name="detail">Detail</string>
     <string name="title">Title</string>
+    <string name="todo_icon_description">Todo Icon</string>
+    <string name="tick_mark_description">Tick Mark</string>
+
+<!--    <string name="app_description">Todo App is a task management app designed to help you stay organized and increase your productivity.-->
+
+<!--Key Features:-->
+
+<!--Todo Management: Easily create, manage, and organize your todos in one place.-->
+<!--Due Dates: Set due dates for your todos to stay on track.-->
+<!--Status: Get to know if your todo is completed or incomplete.-->
+<!--Descriptions: Add detailed descriptions to your todos for better clarity.-->
+<!--Search todo: Find the exact todo you are looking for by searching its title and description.-->
+
+<!--We believe in providing a seamless user experience and a visually appealing interface. With TodoApp, you can effortlessly manage your tasks, prioritize them, and track your progress. Whether you're a busy professional, a student, or anyone looking to stay organized, TodoApp is here to assist you.-->
+
+<!--Thank you for choosing Todo App!-->
+
+<!--Version: 1.0 </string>-->
+
 </resources>
